@@ -1,7 +1,7 @@
 // === 🤖 Telegram Webhook Handler ===
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import telegramHandler from './telegramHandler.js'
-import googleHandler from './googleHandler.js'
+import telegramHandler from './telegramHandler'
+import googleHandler from './googleHandler'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const path = req.url
