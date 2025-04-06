@@ -1,5 +1,8 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = telegramHandler;
 // : Promise<VercelResponse>
-export default async function telegramHandler(req, res) {
+async function telegramHandler(req, res) {
     try {
         console.log('Telegram Handler started 1');
         res.status(200).send('ok');
