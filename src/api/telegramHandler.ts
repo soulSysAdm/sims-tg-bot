@@ -45,6 +45,7 @@ export default async function telegramHandler(
     //   await handleCallbackQuery(body.callback_query, chatId)
     // }
 
+    console.log('Telegram Handler started')
     res.status(200).send('ok')
   } catch (error) {
     console.error('❌ Ошибка основного webhook:', error)
