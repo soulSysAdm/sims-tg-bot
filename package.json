@@ -1,7 +1,7 @@
 {
   "name": "sims-vercel-bot",
   "version": "1.0.0",
-  "type": "CommonJS",
+  "type": "commonjs",
   "scripts": {
     "dev": "vercel dev",
     "build": "tsc",
