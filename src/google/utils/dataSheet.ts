@@ -108,19 +108,19 @@ const getSheetByAllData = (data?: FilteredNumberRow[]): FilteredNumberRow[] => {
 
 const getSheetByNextThreeMonth = (data: NumberRowWithDate[]): DataByMonth[] => {
   const currentMonth: DataByMonth = {
-    title: `${getMonthYearLabel(0)} (Текущий месяц)\n\n`,
+    title: `⛰️ ${getMonthYearLabel(0)} (Текущий месяц)\n\n`,
     data: getDataByMonth(data, 0),
   }
   const nextMonth: DataByMonth = {
-    title: `${getMonthYearLabel(1)} (Через 1 месяц)\n\n`,
+    title: `🚣️ ${getMonthYearLabel(1)} (Через 1 месяц)\n\n`,
     data: getDataByMonth(data, 1),
   }
   const inTwoMonths: DataByMonth = {
-    title: `${getMonthYearLabel(2)} (Через 2 месяца)\n\n`,
+    title: `🚵🏻‍♀️ ${getMonthYearLabel(2)} (Через 2 месяца)\n\n`,
     data: getDataByMonth(data, 2),
   }
   const inThreeMonths: DataByMonth = {
-    title: `${getMonthYearLabel(3)} (Через 3 месяца)\n\n`,
+    title: `🏄🏻‍ ${getMonthYearLabel(3)} (Через 3 месяца)\n\n`,
     data: getDataByMonth(data, 3),
   }
   return [currentMonth, nextMonth, inTwoMonths, inThreeMonths]
@@ -133,7 +133,7 @@ const getMessageByType = (data: NumberRowWithDate[]): string => {
       (item) => getLowerCase(item[NUMBER_VALID_KEY]) === getLowerCase(key),
     )
     if (filteredData.length) {
-      message += `"${key}" тип:\n`
+      message += `🦕 "${key}" тип:\n\n`
       filteredData.forEach((dataNumber) => {
         message += dataNumber[PHONE_NUMBER_KEY] + '\n'
       })
