@@ -1,24 +1,34 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = telegramHandler;
-function telegramHandler(req, res) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            console.log('Telegram Handler started 1');
-            res.status(200).send('ok');
+const dateFormat_1 = require("../assets/dateFormat");
+const checkUser_1 = require("../telegram/utils/checkUser");
+const telegram_1 = require("../telegram");
+// : Promise<VercelResponse>
+async function telegramHandler(req, res) {
+    console.log('🔥 Webhook вызван в', (0, dateFormat_1.getTimeInUkraine)());
+    try {
+        const body = req.body;
+        const userId = body?.message?.from?.id || body?.callback_query?.from?.id;
+        const chatId = body?.message?.chat?.id || body?.callback_query?.message?.chat?.id;
+        const userName = body?.message?.from?.username ||
+            body?.message?.from?.first_name ||
+            body?.callback_query?.from?.username ||
+            body?.callback_query?.from?.first_name;
+        if (!(await (0, checkUser_1.isAuthorizedUser)(userId, chatId, userName))) {
+            res.status(200).send('🚫 Доступ запрещён');
+            return;
         }
-        catch (error) {
-            console.error('❌ Ошибка основного webhook:', error);
-            res.status(500).send('Ошибка сервера');
+        if (body.message?.text === '/start') {
+            await (0, telegram_1.handleStartCommand)(chatId, userName);
         }
-    });
+        if (body.message?.text === '/check') {
+            await (0, telegram_1.handleCheckCommand)(userName);
+        }
+        res.status(200).send('ok');
+    }
+    catch (error) {
+        console.error('❌ Ошибка основного webhook:', error.message);
+        res.status(500).send('Ошибка сервера');
+    }
 }
