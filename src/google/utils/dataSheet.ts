@@ -159,7 +159,7 @@ const getValidateMessages = (data: DataByMonth[]): TelegramMessages => {
 
 const getUnValidateMessages = (data: FilteredNumberRow[]): TelegramMessages => {
   const result = []
-  let message = `Проблемные номера: \n\n`
+  let message = `⚠️ Проблемные номера: \n\n`
   if (data.length) {
     data.forEach((item) => {
       message += `${PHONE_NUMBER_KEY}: ${item[PHONE_NUMBER_KEY]} | ${BEST_BEFORE_DATE_KEY}: ${item[BEST_BEFORE_DATE_KEY] || '-'} |${NUMBER_VALID_KEY}: ${item[NUMBER_VALID_KEY] || '-'} \n`
