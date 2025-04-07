@@ -64,19 +64,19 @@ const getSheetByAllData = (data) => {
 };
 const getSheetByNextThreeMonth = (data) => {
     const currentMonth = {
-        title: `${(0, dateFormat_1.getMonthYearLabel)(0)} (Текущий месяц)\n\n`,
+        title: `⛰️ ${(0, dateFormat_1.getMonthYearLabel)(0)} (Текущий месяц)\n\n`,
         data: (0, dateFormat_1.getDataByMonth)(data, 0),
     };
     const nextMonth = {
-        title: `${(0, dateFormat_1.getMonthYearLabel)(1)} (Через 1 месяц)\n\n`,
+        title: `🚣️ ${(0, dateFormat_1.getMonthYearLabel)(1)} (Через 1 месяц)\n\n`,
         data: (0, dateFormat_1.getDataByMonth)(data, 1),
     };
     const inTwoMonths = {
-        title: `${(0, dateFormat_1.getMonthYearLabel)(2)} (Через 2 месяца)\n\n`,
+        title: `🚵🏻‍♀️ ${(0, dateFormat_1.getMonthYearLabel)(2)} (Через 2 месяца)\n\n`,
         data: (0, dateFormat_1.getDataByMonth)(data, 2),
     };
     const inThreeMonths = {
-        title: `${(0, dateFormat_1.getMonthYearLabel)(3)} (Через 3 месяца)\n\n`,
+        title: `🏄🏻‍ ${(0, dateFormat_1.getMonthYearLabel)(3)} (Через 3 месяца)\n\n`,
         data: (0, dateFormat_1.getDataByMonth)(data, 3),
     };
     return [currentMonth, nextMonth, inTwoMonths, inThreeMonths];
@@ -86,7 +86,7 @@ const getMessageByType = (data) => {
     globals_1.validKeys.forEach((key) => {
         const filteredData = data.filter((item) => (0, validateData_1.getLowerCase)(item[constants_1.NUMBER_VALID_KEY]) === (0, validateData_1.getLowerCase)(key));
         if (filteredData.length) {
-            message += `"${key}" тип:\n`;
+            message += `🦕 "${key}" тип:\n\n`;
             filteredData.forEach((dataNumber) => {
                 message += dataNumber[constants_1.PHONE_NUMBER_KEY] + '\n';
             });
@@ -111,7 +111,7 @@ const getValidateMessages = (data) => {
 };
 const getUnValidateMessages = (data) => {
     const result = [];
-    let message = `Проблемные номера: \n\n`;
+    let message = `⚠️ Проблемные номера: \n\n`;
     if (data.length) {
         data.forEach((item) => {
             message += `${constants_1.PHONE_NUMBER_KEY}: ${item[constants_1.PHONE_NUMBER_KEY]} | ${constants_1.BEST_BEFORE_DATE_KEY}: ${item[constants_1.BEST_BEFORE_DATE_KEY] || '-'} |${constants_1.NUMBER_VALID_KEY}: ${item[constants_1.NUMBER_VALID_KEY] || '-'} \n`;
