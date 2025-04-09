@@ -21,6 +21,7 @@ import {
   getDataByMonth,
   getDateByUnknownFormat,
   getMonthYearLabel,
+  isInvalidOrTodayOrPast,
 } from '../../assets/dateFormat'
 import type { SheetObject } from '../../types'
 import { validKeys } from '../../globals'
@@ -77,7 +78,8 @@ const getSheetByEmptyBeforeDateOrNumberValid = (
   return data.filter(
     (item) =>
       isEmptyItemDate(item[BEST_BEFORE_DATE_KEY]) ||
-      isEmptyItemValid(item[NUMBER_VALID_KEY]),
+      isEmptyItemValid(item[NUMBER_VALID_KEY]) ||
+      isInvalidOrTodayOrPast(item[BEST_BEFORE_DATE_KEY]),
   )
 }
 
@@ -88,7 +90,8 @@ const getSheetByAllDataWithDate = (
     .filter(
       (item) =>
         !isEmptyItemDate(item[BEST_BEFORE_DATE_KEY]) &&
-        !isEmptyItemValid(item[NUMBER_VALID_KEY]),
+        !isEmptyItemValid(item[NUMBER_VALID_KEY]) &&
+        !isInvalidOrTodayOrPast(item[BEST_BEFORE_DATE_KEY]),
     )
     .map((item) => {
       return {

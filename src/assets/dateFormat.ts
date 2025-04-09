@@ -54,6 +54,16 @@ export const getDateByUnknownFormat = (
   return parsed.isValid() ? parsed.format() : null
 }
 
+export const isInvalidOrTodayOrPast = (dateStr: string): boolean => {
+  const dateFormat = getDateByUnknownFormat(dateStr)
+  if (!dateFormat) return true
+
+  const today = moment().tz('Europe/Kyiv').startOf('day')
+  const target = moment(dateFormat).tz('Europe/Kyiv').startOf('day')
+
+  return target.isSameOrBefore(today)
+}
+
 export const getDataByMonth = (
   data: NumberRowWithDate[],
   monthOffset: number = 0,

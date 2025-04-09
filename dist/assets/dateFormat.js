@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMonthYearLabel = exports.getDataByMonth = exports.getDateByUnknownFormat = exports.getDaysFromToday = exports.delaySeconds = exports.getTimeInUkraine = exports.getDisplayDate = exports.getDisplayDateWithDay = void 0;
+exports.getMonthYearLabel = exports.getDataByMonth = exports.isInvalidOrTodayOrPast = exports.getDateByUnknownFormat = exports.getDaysFromToday = exports.delaySeconds = exports.getTimeInUkraine = exports.getDisplayDate = exports.getDisplayDateWithDay = void 0;
 const moment_timezone_1 = __importDefault(require("moment-timezone"));
 const validateData_1 = require("./validateData");
 const getDisplayDateWithDay = (date) => {
@@ -54,6 +54,15 @@ const getDateByUnknownFormat = (date) => {
     return parsed.isValid() ? parsed.format() : null;
 };
 exports.getDateByUnknownFormat = getDateByUnknownFormat;
+const isInvalidOrTodayOrPast = (dateStr) => {
+    const dateFormat = (0, exports.getDateByUnknownFormat)(dateStr);
+    if (!dateFormat)
+        return true;
+    const today = (0, moment_timezone_1.default)().tz('Europe/Kyiv').startOf('day');
+    const target = (0, moment_timezone_1.default)(dateFormat).tz('Europe/Kyiv').startOf('day');
+    return target.isSameOrBefore(today);
+};
+exports.isInvalidOrTodayOrPast = isInvalidOrTodayOrPast;
 const getDataByMonth = (data, monthOffset = 0) => {
     const targetMonth = (0, moment_timezone_1.default)()
         .tz('Europe/Kyiv')

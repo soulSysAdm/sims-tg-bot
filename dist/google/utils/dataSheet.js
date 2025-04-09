@@ -45,12 +45,14 @@ const isEmptyItemDate = (value) => {
 };
 const getSheetByEmptyBeforeDateOrNumberValid = (data) => {
     return data.filter((item) => isEmptyItemDate(item[constants_1.BEST_BEFORE_DATE_KEY]) ||
-        isEmptyItemValid(item[constants_1.NUMBER_VALID_KEY]));
+        isEmptyItemValid(item[constants_1.NUMBER_VALID_KEY]) ||
+        (0, dateFormat_1.isInvalidOrTodayOrPast)(item[constants_1.BEST_BEFORE_DATE_KEY]));
 };
 const getSheetByAllDataWithDate = (data) => {
     return data
         .filter((item) => !isEmptyItemDate(item[constants_1.BEST_BEFORE_DATE_KEY]) &&
-        !isEmptyItemValid(item[constants_1.NUMBER_VALID_KEY]))
+        !isEmptyItemValid(item[constants_1.NUMBER_VALID_KEY]) &&
+        !(0, dateFormat_1.isInvalidOrTodayOrPast)(item[constants_1.BEST_BEFORE_DATE_KEY]))
         .map((item) => {
         return {
             ...item,
