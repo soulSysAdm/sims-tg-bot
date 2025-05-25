@@ -1,12 +1,23 @@
 import { sendTelegramMessage } from '../index'
-import { allowedUsers } from '../../globals'
+import type { AllowedUser } from '../../types'
+
+let ALLOWED_USERS: AllowedUser[]
+
+if (process.env.VERCEL) {
+  ALLOWED_USERS = JSON.parse(process.env.ALLOWED_USERS || '[]')
+} else {
+  const dotenv = require('dotenv')
+  dotenv.config()
+  ALLOWED_USERS = JSON.parse(process.env.ALLOWED_USERS || '[]')
+}
 
 export async function isAuthorizedUser(
   userId: number,
   chatId: number,
   userName: string,
 ): Promise<boolean> {
-  const authorized = userId && allowedUsers.includes(userId)
+  const allowedUsersIds = ALLOWED_USERS.map((user) => user.id)
+  const authorized = userId && allowedUsersIds.includes(userId)
   if (!authorized && chatId) {
     await sendTelegramMessage(
       chatId,

@@ -2,18 +2,21 @@ import { google, Auth } from 'googleapis'
 import { JWT } from 'google-auth-library'
 import { ID_KEY } from '../../constants'
 import { getValidateArray } from '../../assets/validateData.js'
-import { spreadsheetId, range } from '../../globals'
+import { range } from '../../globals'
 import type { SheetObject, SheetData } from '../../types'
 
 let GOOGLE_CREDENTIALS: Record<string, any>
+let GOOGLE_SHEET_ID: string | undefined
 
 if (process.env.VERCEL) {
   GOOGLE_CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS || '{}')
+  GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID
 } else {
   // ✅ без top-level await, классика:
   const dotenv = require('dotenv')
   dotenv.config()
   GOOGLE_CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS || '{}')
+  GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID
 }
 
 const auth = new google.auth.GoogleAuth({
@@ -74,7 +77,7 @@ export const readSheet = async (): Promise<SheetObject[]> => {
   const sheets = google.sheets({ version: 'v4', auth: client })
 
   const res = await sheets.spreadsheets.values.get({
-    spreadsheetId,
+    spreadsheetId: GOOGLE_SHEET_ID,
     range,
   })
 

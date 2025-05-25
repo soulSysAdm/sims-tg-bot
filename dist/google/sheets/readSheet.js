@@ -6,14 +6,17 @@ const constants_1 = require("../../constants");
 const validateData_js_1 = require("../../assets/validateData.js");
 const globals_1 = require("../../globals");
 let GOOGLE_CREDENTIALS;
+let GOOGLE_SHEET_ID;
 if (process.env.VERCEL) {
     GOOGLE_CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS || '{}');
+    GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID;
 }
 else {
     // ✅ без top-level await, классика:
     const dotenv = require('dotenv');
     dotenv.config();
     GOOGLE_CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS || '{}');
+    GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID;
 }
 const auth = new googleapis_1.google.auth.GoogleAuth({
     credentials: GOOGLE_CREDENTIALS,
@@ -64,7 +67,7 @@ const readSheet = async () => {
     const client = (await auth.getClient());
     const sheets = googleapis_1.google.sheets({ version: 'v4', auth: client });
     const res = await sheets.spreadsheets.values.get({
-        spreadsheetId: globals_1.spreadsheetId,
+        spreadsheetId: GOOGLE_SHEET_ID,
         range: globals_1.range,
     });
     const rows = res.data.values;
