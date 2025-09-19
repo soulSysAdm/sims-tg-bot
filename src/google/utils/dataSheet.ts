@@ -136,9 +136,14 @@ const getMessageByType = (data: NumberRowWithDate[]): string => {
       (item) => getLowerCase(item[NUMBER_VALID_KEY]) === getLowerCase(key),
     )
     if (filteredData.length) {
-      message += `🦕 "${key}" тип:\n\n`
-      filteredData.forEach((dataNumber) => {
-        message += dataNumber[PHONE_NUMBER_KEY] + '\n'
+      message += `🦕 "${key}" тип:\n`
+      filteredData.forEach((dataNumber, index, array) => {
+        message += dataNumber[PHONE_NUMBER_KEY]
+        if(index + 1 === array.length) {
+          message += '\n\n'
+        } else {
+          message += '\n'
+        }
       })
     }
   })

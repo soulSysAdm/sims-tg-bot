@@ -7,6 +7,7 @@ export const NUMBER_VALID_KEY = 'Валидный'
 export const VALID_YES_KEY = 'Да'
 export const VALID_YES_DEZ_KEY = 'Да (Дез)'
 export const VALID_OTHER_KEY = 'Другие'
+export const VALID_FIN_KEY = 'Фин отдел'
 
 export const VALID_NO_KEY = 'Нет'
 export const VALID_NOT_FOUND_KEY = 'Не НАШЕЛ'
