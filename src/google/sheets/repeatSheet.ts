@@ -12,19 +12,19 @@ if (process.env.VERCEL) {
   ALLOWED_USERS = JSON.parse(process.env.ALLOWED_USERS || '[]')
 }
 
-export async function repeatSheet() {
+export async function repeatSheet(chatId: number) {
   try {
     const sheetData = await readSheet()
     const { validMessages, unValidMessages } = getTelegramMessages(sheetData)
     const allowedUsersIds = ALLOWED_USERS.map((user) => user.id)
-    for (const chatId of allowedUsersIds) {
+    // for (const chatId of allowedUsersIds) {
       for (const message of unValidMessages) {
         await sendTelegramMessage(chatId, message)
       }
       for (const message of validMessages) {
         await sendTelegramMessage(chatId, message)
       }
-    }
+    // }
   } catch (error) {
     console.error('❌ Ошибка repeatSheet:', error.message)
   }

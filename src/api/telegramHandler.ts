@@ -30,7 +30,7 @@ export default async function telegramHandler(
     }
 
     if (body.message?.text === '/check') {
-      await handleCheckCommand(userName)
+      await handleCheckCommand(chatId, userName)
     }
 
     res.status(200).send('ok')
