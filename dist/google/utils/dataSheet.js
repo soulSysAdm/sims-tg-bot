@@ -88,9 +88,15 @@ const getMessageByType = (data) => {
     globals_1.validKeys.forEach((key) => {
         const filteredData = data.filter((item) => (0, validateData_1.getLowerCase)(item[constants_1.NUMBER_VALID_KEY]) === (0, validateData_1.getLowerCase)(key));
         if (filteredData.length) {
-            message += `🦕 "${key}" тип:\n\n`;
-            filteredData.forEach((dataNumber) => {
-                message += dataNumber[constants_1.PHONE_NUMBER_KEY] + '\n';
+            message += `🦕 "${key}" тип:\n`;
+            filteredData.forEach((dataNumber, index, array) => {
+                message += dataNumber[constants_1.PHONE_NUMBER_KEY];
+                if (index + 1 === array.length) {
+                    message += '\n\n';
+                }
+                else {
+                    message += '\n';
+                }
             });
         }
     });
